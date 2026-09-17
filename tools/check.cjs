@@ -9,7 +9,7 @@ for (const name of pages) {
   if (name !== '404.html' && !html.includes('Tornado Fluid Technologies')) {
     errors.push(`${name}: missing English brand`);
   }
-  for (const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
+  for (const match of html.matchAll(/\b(?:href|src|srcset|data-desktop|data-mobile)="([^"]+)"/g)) {
     const url = match[1].replace(/&amp;/g, '&');
     if (/^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(url)) continue;
     const local = decodeURIComponent(url.split(/[?#]/)[0]);

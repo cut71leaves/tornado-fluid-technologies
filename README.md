@@ -2,7 +2,7 @@
 
 英文品牌：Tornado Fluid Technologies  
 核心技术：悬浮空化技术  
-版本：英文品牌更新与 GitHub 协作准备版 2026-09-17
+版本：原创首页流体动效版 2026-09-17
 
 ## 浏览
 
@@ -13,6 +13,8 @@
 网站包含品牌首页、技术与产品、6 个行业、35 个细分场景、13 项工艺、4 篇技术文章、资料中心、关于我们、联系页面、隐私说明、使用条款及英文概览。所有内容页为独立 HTML，支持直接访问、浏览器返回和站内搜索。
 
 搜索在浏览器内运行。技术轮播和内容筛选可直接使用。资料中心的概览与准备清单均可真实下载。
+
+首页加入 12 秒原创银白、浅青色流体动画，电脑与手机采用独立构图。视频静音循环，可手动暂停；离开首屏或切换后台时暂停，开启系统“减少动态效果”时只显示封面。视频无法播放时仍可正常阅读和使用网站。
 
 ## 当前上线状态
 
@@ -35,9 +37,11 @@
 - content.js：行业、场景、工艺和文章正文。
 - site.css：完整设计系统与响应式排版。
 - site.js：搜索、导航、轮播、筛选和需求摘要下载。
+- hero-motion.js：仅首页加载的背景视频播放、暂停、设备选择和静态回退逻辑。
 - config.js：已核验的公开联系方式与正式域名配置。
 - tools/build.cjs：使用 Node.js 生成所有静态页面与搜索索引，不需要第三方构建依赖。
 - tools/check.cjs：跨电脑运行的品牌名称与本地链接资源检查，无第三方依赖。
+- tools/motion-check.cjs：流体视频、手机布局、暂停、减少动态效果、失败回退及本地文件播放验证；需要 Playwright，可通过 PLAYWRIGHT_MODULE、CHROMIUM_PATH 和 MOTION_CHECK_OUT 指定依赖、浏览器和输出位置。
 - tools/verify.cjs 与 tools/recheck.cjs：本机浏览器验证脚本，使用当前电脑的 Playwright 与 Chromium 路径；在其他电脑运行时需调整依赖路径。验证输出位于项目 work/vortex-fluid-checks。
 - assets：网站需要的全部图片、图标和可下载资料。
 
@@ -48,6 +52,8 @@
 在 config.js 的 siteUrl 填入正式 https 域名后重新构建，将自动写入各页面 canonical 和 Open Graph 地址，并生成 sitemap.xml 与对应 robots.txt。域名未确认时不生成虚构的站点地址。
 
 ## 视觉素材
+
+首页使用 `assets/fluid-desktop.mp4`、`assets/fluid-mobile.mp4` 及配套 WebP 封面。可编辑 Blender 场景、制作说明见 [原创流体动画](design/fluid/README.md)，生成和编码工具保留在 tools 中。动画为品牌视觉，非空化仿真或实验实测；未使用参考录屏作为网页素材。
 
 flow-hero.webp、reaction-module.webp 和 flow-edge.webp 根据用户提供的设计图提取与处理，用于还原视觉方向。模块概念图不代表实际产品结构或样机照片。
 

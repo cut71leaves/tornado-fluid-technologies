@@ -4,7 +4,7 @@ const { pathToFileURL, fileURLToPath } = require('url');
 const { chromium } = require('C:/Users/18513/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const sharp = require('C:/Users/18513/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp');
 const root = path.resolve(__dirname, '..');
-const out = path.resolve(root, '../../work/vortex-fluid-checks');
+const out = path.resolve(process.env.VORTEX_CHECK_OUT || path.join(root, '../../work/vortex-fluid-checks'));
 fs.mkdirSync(out, {recursive:true});
 const results = {pages: [], links: [], interactions: [], errors: []};
 let activeBrowser;

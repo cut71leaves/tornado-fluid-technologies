@@ -9,3 +9,5 @@
 *.txt text eol=lf
 *.jpg binary
 *.webp binary
+*.mp4 binary
+*.blend binary
