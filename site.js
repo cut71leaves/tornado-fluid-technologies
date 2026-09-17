@@ -46,7 +46,6 @@
    if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))dialog.close();
   });
  });
- $$('[data-open-demo]').forEach(button=>button.addEventListener('click',()=>$('#demo-dialog').showModal()));
 
  let moduleIndex=0;
  function moduleSlide(delta){

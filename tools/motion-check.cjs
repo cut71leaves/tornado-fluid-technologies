@@ -35,12 +35,12 @@ async function run() {
   const page = await browser.newPage();
   page.on('pageerror', error => errors.push(error.message));
   const playing = () => page.waitForFunction(() => {
-    const v = document.querySelector('video'); return !v.paused && v.currentTime > .05 && document.querySelector('.motion-ready');
+    const v = document.querySelector('#hero-fluid-video'); return !v.paused && v.currentTime > .05 && document.querySelector('.motion-ready');
   });
   for (const width of [1440,390,360]) {
     await page.setViewportSize({width,height:width===1440?1000:844});
     await page.goto(url); await playing();
-    const info = await page.locator('video').evaluate(v => ({src:v.currentSrc,duration:v.duration,muted:v.muted,w:v.videoWidth,h:v.videoHeight}));
+    const info = await page.locator('#hero-fluid-video').evaluate(v => ({src:v.currentSrc,duration:v.duration,muted:v.muted,w:v.videoWidth,h:v.videoHeight}));
     assert.ok(info.src.endsWith(width>700?'fluid-desktop.mp4':'fluid-mobile.mp4'));
     assert.equal(info.duration,12); assert.ok(info.muted);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth<=innerWidth));
@@ -49,28 +49,33 @@ async function run() {
   }
   const toggle = page.locator('[data-motion-toggle]');
   await toggle.click();
-  assert.ok(await page.locator('video').evaluate(v=>v.paused));
+  assert.ok(await page.locator('#hero-fluid-video').evaluate(v=>v.paused));
   await page.evaluate(()=>scrollTo(0,1700)); await page.waitForTimeout(150);
   await page.evaluate(()=>scrollTo(0,0)); await page.waitForTimeout(250);
-  assert.ok(await page.locator('video').evaluate(v=>v.paused));
+  assert.ok(await page.locator('#hero-fluid-video').evaluate(v=>v.paused));
   await page.setViewportSize({width:1440,height:1000});
   await page.waitForTimeout(150);
   assert.ok(await toggle.isVisible()); await toggle.click(); await playing();
   checks.push({name:'User pause persists across scrolling and viewport change'});
   await page.evaluate(()=>scrollTo(0,1800));
-  await page.waitForFunction(()=>document.querySelector('video').paused);
+  await page.waitForFunction(()=>document.querySelector('#hero-fluid-video').paused);
   await page.evaluate(()=>scrollTo(0,0)); await playing();
   checks.push({name:'Offscreen pauses; visible resumes'});
   await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));});
-  assert.ok(await page.locator('video').evaluate(v=>v.paused));
+  assert.ok(await page.locator('#hero-fluid-video').evaluate(v=>v.paused));
   await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'));});
   await playing(); checks.push({name:'Visibility-change handler pauses and resumes'});
-  await page.locator('video').evaluate(v=>{v.currentTime=11.85;});
-  await page.waitForFunction(()=>document.querySelector('video').currentTime<1.5);
+  await page.locator('#hero-fluid-video').evaluate(v=>{v.currentTime=11.85;});
+  await page.waitForFunction(()=>document.querySelector('#hero-fluid-video').currentTime<1.5);
   checks.push({name:'Playback crosses loop boundary'});
   await page.emulateMedia({reducedMotion:'reduce'});
-  await page.waitForFunction(()=>!document.querySelector('.hero').classList.contains('motion-ready'));
-  assert.ok(await page.locator('video').evaluate(v=>v.paused));
+  try {
+    await page.waitForFunction(()=>!document.querySelector('.hero').classList.contains('motion-ready'),undefined,{timeout:5000});
+  } catch (error) {
+    console.error(await page.evaluate(()=>({reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,hidden:document.hidden,heroClass:document.querySelector('.hero').className,paused:document.querySelector('#hero-fluid-video').paused,contentPlaying:window.VORTEX_MEDIA?.isPlaying()})));
+    throw error;
+  }
+  assert.ok(await page.locator('#hero-fluid-video').evaluate(v=>v.paused));
   assert.ok(!await page.locator('.hero').evaluate(e=>e.classList.contains('motion-ready')));
   await page.emulateMedia({reducedMotion:'no-preference'}); await playing();
   checks.push({name:'Changing reduced-motion preference shows poster then resumes'});
@@ -83,7 +88,7 @@ async function run() {
   checks.push({name:'Reduced-motion initial load requests no video'});
   const failed = await browser.newPage();
   await failed.route('**/*.mp4', route=>route.abort());
-  await failed.goto(url); await failed.waitForFunction(()=>document.querySelector('video').error);
+  await failed.goto(url); await failed.waitForFunction(()=>document.querySelector('#hero-fluid-video').error);
   assert.ok(!await failed.locator('.hero').evaluate(e=>e.classList.contains('motion-ready')));
   assert.ok(await failed.locator('.hero-media img').evaluate(e=>e.complete&&e.naturalWidth>0));
   await failed.locator('#search-open').click();
@@ -98,7 +103,7 @@ async function run() {
   await blocked.goto(url); await blocked.waitForTimeout(400);
   assert.ok(!await blocked.locator('.hero').evaluate(e=>e.classList.contains('motion-ready')));
   await blocked.locator('[data-motion-toggle]').click();
-  await blocked.waitForFunction(()=>!document.querySelector('video').paused&&document.querySelector('video').currentTime>0);
+  await blocked.waitForFunction(()=>!document.querySelector('#hero-fluid-video').paused&&document.querySelector('#hero-fluid-video').currentTime>0);
   checks.push({name:'Autoplay refusal keeps poster; explicit play recovers'});
   const slow = await browser.newPage();
   await slow.route('**/*.mp4',async route=>{await new Promise(r=>setTimeout(r,1000));await route.continue();});

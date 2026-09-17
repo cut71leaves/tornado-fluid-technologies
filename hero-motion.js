@@ -6,7 +6,7 @@
   const video = hero.querySelector('video');
   const toggle = hero.querySelector('[data-motion-toggle]');
   const text = toggle.querySelector('span');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = window.VORTEX_MOTION.reduced;
   const portrait = matchMedia('(max-width: 700px)');
   let visible = false, userPaused = false, blocked = false, failed = false;
   let source = '', generation = 0, pending = false;
@@ -24,7 +24,7 @@
     label();
   }
   function active() {
-    return visible && !document.hidden && !reduced.matches && !userPaused && !blocked && !failed;
+    return visible && !document.hidden && !reduced.matches && !userPaused && !blocked && !failed && !window.VORTEX_MEDIA?.isPlaying();
   }
   function sync() {
     if (reduced.matches) { fallback(); return; }
@@ -69,9 +69,10 @@
   });
   video.addEventListener('pause', label);
   document.addEventListener('visibilitychange', sync);
+  document.addEventListener('vortex:media-state', sync);
   window.addEventListener('pagehide', () => video.pause());
   window.addEventListener('pageshow', sync);
-  reduced.addEventListener('change', sync);
+  window.VORTEX_MOTION.subscribe(sync);
   portrait.addEventListener('change', () => {
     generation++;
     pending = false;

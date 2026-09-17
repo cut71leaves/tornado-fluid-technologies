@@ -1,0 +1,23 @@
+[
+  {
+    "source": "0.mp4",
+    "sourceSha256": "7babfd4a0c9b41d02e00e1f0aea3be136a5aaa469600621127c47ccb5cf0ac66",
+    "webVideo": "prototype.mp4",
+    "poster": "prototype.webp",
+    "sourceUnchanged": true
+  },
+  {
+    "source": "1.mp4",
+    "sourceSha256": "72d1f6a686ad4e8ede071e5e7fdb60a3500dd0385d0d95fba0744aa3f687f294",
+    "webVideo": "cavitation-science.mp4",
+    "poster": "cavitation-science.webp",
+    "sourceUnchanged": true
+  },
+  {
+    "source": "2.mp4",
+    "sourceSha256": "ef1f5ba3fcc9edd4efdd1d7c7f3bea31886a8638afdef2b94f6d9861e5b91794",
+    "webVideo": "reaction-concept.mp4",
+    "poster": "reaction-concept.webp",
+    "sourceUnchanged": true
+  }
+]
