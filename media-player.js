@@ -4,7 +4,7 @@
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const motionSubscribers=new Set();
   window.VORTEX_MOTION={reduced,subscribe:callback=>motionSubscribers.add(callback)};
-  reduced.addEventListener('change',()=>motionSubscribers.forEach(callback=>callback()));
+  reduced.onchange=()=>motionSubscribers.forEach(callback=>callback());
   const videos = [...document.querySelectorAll('video[data-content-video]')];
   if (!videos.length) return;
   const dialog = document.querySelector('#demo-dialog');

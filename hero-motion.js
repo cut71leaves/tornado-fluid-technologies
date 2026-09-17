@@ -73,6 +73,8 @@
   window.addEventListener('pagehide', () => video.pause());
   window.addEventListener('pageshow', sync);
   window.VORTEX_MOTION.subscribe(sync);
+  // CSS can hide/show the film for accessibility; track its actual display size too.
+  new ResizeObserver(sync).observe(video);
   portrait.addEventListener('change', () => {
     generation++;
     pending = false;

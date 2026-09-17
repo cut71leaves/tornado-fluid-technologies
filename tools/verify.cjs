@@ -6,7 +6,7 @@ const sharp = require('C:/Users/18513/.cache/codex-runtimes/codex-primary-runtim
 const root = path.resolve(__dirname, '..');
 const out = path.resolve(process.env.VORTEX_CHECK_OUT || path.join(root, '../../work/vortex-fluid-checks'));
 fs.mkdirSync(out, {recursive:true});
-const results = {pages: [], links: [], interactions: [], errors: []};
+const results = {pages: [], links: [], interactions: [], errors: [], cancelledMedia: []};
 let activeBrowser;
 function record(name, passed, detail) { results.interactions.push({name,passed,detail}); }
 async function run(){
@@ -16,7 +16,11 @@ async function run(){
  const page = await ctx.newPage();
  let current='';
  page.on('pageerror',e=>results.errors.push({page:current,error:e.message}));
- page.on('requestfailed',r=>results.errors.push({page:current,request:r.url(),error:r.failure()?.errorText}));
+ page.on('requestfailed',r=>{
+  const failure={page:current,request:r.url(),error:r.failure()?.errorText};
+  if(r.resourceType()==='media'&&failure.error==='net::ERR_ABORTED'&&/\/assets\/fluid-(desktop|mobile)\.mp4$/.test(r.url()))results.cancelledMedia.push(failure);
+  else results.errors.push(failure);
+ });
  const url=name=>pathToFileURL(path.join(root,name)).href;
  const navigate=async name=>{current=name;await page.goto(url(name));await page.waitForLoadState('load');};
  const files=fs.readdirSync(root).filter(x=>x.endsWith('.html'));
@@ -57,8 +61,8 @@ async function run(){
  await page.keyboard.press('Escape');await page.waitForTimeout(150);record('search escape + return focus',!await page.locator('#search-dialog').isVisible()&&await page.locator('#search-open').evaluate(e=>e===document.activeElement));
  if(await page.locator('#search-dialog').isVisible())await page.locator('#search-dialog [data-close]').click();
  await page.locator('#search-open').click();await page.locator('#search-input').fill('切削液');await page.locator('#search-results a').filter({hasText:'切削液与润滑体系'}).first().click();record('search navigation',page.url().endsWith('scene-cutting-fluid.html'),page.url());
- await navigate('index.html');await page.locator('[data-open-demo]').click();record('demo opens',await page.locator('#demo-dialog').isVisible());await page.screenshot({path:path.join(out,'demo-desktop.png')});await page.locator('#demo-dialog [data-close]').click();record('demo closes',!await page.locator('#demo-dialog').isVisible());
- const before=await page.locator('[data-module-title]').innerText();await page.locator('[data-module-next]').click();record('module carousel next',(await page.locator('[data-module-title]').innerText())!==before&&await page.locator('[data-module-counter]').innerText()==='02 / 03');await page.locator('[data-module-prev]').click();record('module carousel prev',await page.locator('[data-module-title]').innerText()===before);
+ await navigate('index.html');await page.locator('.demo-link').click();record('technology video navigation',page.url().endsWith('technology.html#videos'));record('three technical videos',await page.locator('main video[data-content-video]').count()===3);await navigate('index.html');
+ record('compact homepage',await page.locator('main video[data-content-video]').count()===0&&await page.locator('[data-fluid-stage]').count()===0);await page.evaluate(()=>window.scrollTo({top:1200,behavior:'instant'}));record('fixed navigation while scrolling',await page.locator('.header').evaluate(e=>Math.abs(e.getBoundingClientRect().top)<1));await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
  await page.locator('[data-hero-next]').click();record('hero carousel next',await page.locator('.rail-controls > span').innerText()==='02 / 03');await page.locator('[data-hero-prev]').click();record('hero carousel prev',await page.locator('.rail-controls > span').innerText()==='01 / 03');
  await navigate('research.html');for(const name of ['空化知识','技术研究','行业观察','全部']){await page.locator(`[data-filter="${name}"]`).click();const cats=await page.locator('[data-category]:visible').evaluateAll(a=>a.map(x=>x.dataset.category));record('filter '+name,name==='全部'?cats.length===4:name==='行业观察'?cats.length===0&&await page.locator('.filter-empty').isVisible():cats.length===2&&cats.every(x=>x===name),cats);}
  await navigate('contact.html');await page.locator('#enquiry-form button[type="submit"]').click();record('empty form invalid',!await page.locator('#enquiry-form').evaluate(e=>e.checkValidity()));

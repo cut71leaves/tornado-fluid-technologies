@@ -70,13 +70,13 @@ async function run() {
   checks.push({name:'Playback crosses loop boundary'});
   await page.emulateMedia({reducedMotion:'reduce'});
   try {
-    await page.waitForFunction(()=>!document.querySelector('.hero').classList.contains('motion-ready'),undefined,{timeout:5000});
+    await page.waitForFunction(()=>{const v=document.querySelector('#hero-fluid-video');return v.paused&&getComputedStyle(v).display==='none';},undefined,{timeout:5000});
   } catch (error) {
     console.error(await page.evaluate(()=>({reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,hidden:document.hidden,heroClass:document.querySelector('.hero').className,paused:document.querySelector('#hero-fluid-video').paused,contentPlaying:window.VORTEX_MEDIA?.isPlaying()})));
     throw error;
   }
   assert.ok(await page.locator('#hero-fluid-video').evaluate(v=>v.paused));
-  assert.ok(!await page.locator('.hero').evaluate(e=>e.classList.contains('motion-ready')));
+  assert.ok(await page.locator('.hero-media img').evaluate(e=>e.complete&&e.naturalWidth>0));
   await page.emulateMedia({reducedMotion:'no-preference'}); await playing();
   checks.push({name:'Changing reduced-motion preference shows poster then resumes'});
 

@@ -121,3 +121,31 @@ dialog{padding:22px;max-height:90svh}.dialog-top{margin-bottom:15px}.dialog-top 
 @media(max-width:700px){.science-section{padding-block:55px}.science-layout,.experience-layout,.module-showcase--video{grid-template-columns:1fr;gap:30px}.science-copy{max-width:none}.science-copy h2{font-size:29px;margin-bottom:18px}.science-copy .section-lead{font-size:17px}.science-copy p{font-size:13px}.media-play-mark{width:48px;height:48px}.media-start{gap:10px}.content-media>figcaption strong{font-size:14px}.content-media>figcaption span{font-size:9px}.prototype-media{padding:20px 18px 0}.module-showcase--video{gap:0}.module-showcase--video .module-details{padding:60px 25px 30px;min-height:0}.prototype-note{font-size:10px;margin-top:15px}.fluid-experience{padding-top:55px}.sculpture-stage{height:410px}.sculpture-topline{left:18px;right:18px;top:20px;font-size:7px}.sculpture-bottom{left:18px;right:18px;bottom:20px}.sculpture-hint{font-size:10px}.sculpture-hint small{font-size:8px}.sculpture-toggle{padding:7px 11px;font-size:9px}.experience-copy{padding:0}.experience-copy h3{font-size:28px}.experience-copy>p:not(.eyebrow){font-size:12px}.video-library-grid{grid-template-columns:1fr;gap:32px}.video-dialog{padding:20px}.video-dialog .dialog-top h2{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.sculpture-poster{transform:none!important}.sculpture-canvas,.sculpture-toggle{display:none!important}}
 @media print{.media-frame video,.media-start,.sculpture-canvas,.sculpture-toggle{display:none!important}.media-poster,.sculpture-poster{opacity:1!important;visibility:visible!important}.science-layout,.experience-layout,.video-library-grid{display:block}.sculpture-stage{height:350px}.content-media{break-inside:avoid}}
+
+/* Persistent navigation and a quiet background that follows normal scrolling. */
+body{isolation:isolate}
+html{scroll-padding-top:calc(var(--header) + 22px)}
+.header,.inner-page .header{position:fixed;z-index:80;background:#f0f6f6ed;backdrop-filter:blur(18px);border-bottom:1px solid #d4e0e280;box-shadow:0 3px 18px #21464d06}
+.site-ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:#f3f7f8;--drift-x:0px;--drift-y:0px;--drift-angle:0deg}
+.ambient-ribbon{position:absolute;inset:-18vh -12vw;background:url('assets/fluid-desktop.webp') center/cover;opacity:.32;filter:saturate(.65);transform:translate3d(var(--drift-x),var(--drift-y),0) rotate(var(--drift-angle));will-change:transform}
+.ambient-light{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 35%,#ffffffc9,transparent 65%),linear-gradient(120deg,#f5fafaa0,#e7f1f154);transform:translateY(calc(var(--drift-y) * -.2))}
+.home-page .section,.inner-page .section{background:#f8fafbc4}
+.home-page .sector-home,.inner-page .pale{background:#eef4f4c9}
+.footer{background:#e9eff1ed}
+.home-tech-brief{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
+.home-tech-brief h2{font-size:34px;margin-bottom:20px;line-height:1.4}
+.home-tech-brief p:not(.eyebrow){max-width:560px;font-size:14px;line-height:1.95;margin-bottom:25px}
+.home-tech-tags{display:flex;gap:20px;font-size:11px;color:#5d7c81;margin-bottom:27px;flex-wrap:wrap}
+.home-tech-preview{position:relative;display:block}
+.home-tech-preview img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;border-radius:3px}
+.home-tech-preview figcaption{margin-top:13px;font-size:11px;display:flex;justify-content:space-between;gap:15px}
+.technology-video-row{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center;padding:50px 0;border-top:1px solid #cbdcde}
+.technology-video-row:first-child{padding-top:15px;border-top:0}
+.technology-video-row h3{font-size:28px;margin-bottom:20px}
+.technology-video-row p{font-size:14px;line-height:1.95}
+.technology-video-row .eyebrow{font-size:10px}
+.technology-video-row .caption{font-size:11px;line-height:1.8}
+@media(max-width:1020px){.home-tech-brief{gap:38px}.home-tech-brief h2{font-size:29px}.technology-video-row{gap:35px}.nav{max-height:calc(100svh - var(--header));overflow:auto}}
+@media(max-width:700px){.home-tech-brief,.technology-video-row{grid-template-columns:1fr;gap:27px}.home-tech-brief h2{font-size:28px}.home-tech-brief p:not(.eyebrow){font-size:13px}.home-tech-tags{gap:15px;font-size:10px}.home-tech-preview figcaption{font-size:10px}.technology-video-row{padding:35px 0}.technology-video-row h3{font-size:25px}.technology-video-row p{font-size:13px}.technology-video-row .caption{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.ambient-ribbon,.ambient-light{transform:none!important;will-change:auto}}
+@media print{.site-ambient{display:none!important}}

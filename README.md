@@ -2,9 +2,11 @@
 
 英文品牌：Tornado Fluid Technologies  
 核心技术：悬浮空化技术  
-版本：视频与互动流体升级版 2026-09-17
+版本：固定导航与精简首页预览版 2026-09-17
 
 ## 浏览
+
+在线预览：https://cut71leaves.github.io/tornado-fluid-technologies/ 。日常浏览和分享只需此网址，无需下载仓库。工作区 outputs 中的“打开旋风流体官网.html”是独立的小入口文件，需要联网使用。
 
 解压完整文件夹，使用 Chrome 或 Edge 打开 index.html。页面、图片、图标、搜索和下载资料均位于本地，浏览不需要启动服务器。
 
@@ -16,11 +18,13 @@
 
 首页加入 12 秒原创银白、浅青色流体动画，电脑与手机采用独立构图。视频静音循环，可手动暂停；离开首屏或切换后台时暂停，开启系统“减少动态效果”时只显示封面。视频无法播放时仍可正常阅读和使用网站。
 
-首屏下方分段展示空化科普、样机运行与仿真可视化、AI 反应概念影像。内容视频点击播放，提供进度、音量与全屏控制。银青色互动雕塑响应鼠标与正常页面滚动；手机使用静态雕塑图与轻微位移，减少动态效果时保持静止。制作与维护方法见 [视频与互动流体](design/video-interaction/README.md)。
+导航栏在所有页面固定于顶部。首页保留一段简短的技术介绍，三个内容视频集中在“技术与产品”详细展示。独立互动雕塑已从页面移除；全站使用随正常滚动轻微位移的流体背景，减少动态效果时保持静止。之前的雕塑源码与素材保留供后续设计参考，不会被当前页面加载。
 
 ## 当前上线状态
 
-前端与静态内容已完成，源码协作仓库为 https://github.com/cut71leaves/tornado-fluid-technologies 。目前尚未启用 GitHub Pages 公网网站。
+源码协作仓库为 https://github.com/cut71leaves/tornado-fluid-technologies 。在线预览使用 GitHub Pages，发布来源为 main 分支根目录；提交到 main 后由 GitHub 自动更新预览。`.nojekyll` 保证原生静态文件直接发布。
+
+本地文件夹是可编辑、可离线浏览的维护副本。网页多文件结构用于独立页面、素材复用和协作维护，不影响用户通过一个网址或入口 HTML 浏览整站。正式域名与联系方式仍待补充。
 
 正式上线需要落实以下实际信息：
 
@@ -41,7 +45,8 @@
 - site.js：搜索、导航、轮播、筛选和需求摘要下载。
 - hero-motion.js：仅首页加载的背景视频播放、暂停、设备选择和静态回退逻辑。
 - media-player.js：公共内容视频与科普弹窗的点击播放、互斥、停播及错误重试。
-- fluid-loader.js：首页互动流体的延迟加载、鼠标/滚动响应、静态降级和动效暂停。
+- page-background.js：全站背景随滚动位移及减少动态效果适配。
+- fluid-loader.js 与 tools/interaction：历史雕塑实现，当前页面不加载。
 - config.js：已核验的公开联系方式与正式域名配置。
 - tools/build.cjs：使用 Node.js 生成所有静态页面与搜索索引，不需要第三方构建依赖。
 - tools/check.cjs：跨电脑运行的品牌名称与本地链接资源检查，无第三方依赖。
@@ -51,7 +56,7 @@
 
 修改内容后，在网站目录执行 node tools/build.cjs，重新生成 HTML。不要删除 content.js、assets 或 tools 中的构建文件，以便继续维护与复现。
 
-提交前执行 `node tools/check.cjs`，并提交源码及重新生成的 HTML、搜索索引和下载资料。GitHub 仓库保存网站完整源码；将文件上传仓库不会自动启用 GitHub Pages 公网浏览。
+提交前执行 `node tools/check.cjs`，并提交源码及重新生成的 HTML、搜索索引和下载资料。导航、背景及技术页视频用 `tools/navigation-preview-check.cjs` 验证；通过 PREVIEW_URL 可检查在线预览，PREVIEW_CHECK_OUT 指定工作区 work 下的检查输出。旧雕塑版本的测试作为历史维护资料保留。
 
 在 config.js 的 siteUrl 填入正式 https 域名后重新构建，将自动写入各页面 canonical 和 Open Graph 地址，并生成 sitemap.xml 与对应 robots.txt。域名未确认时不生成虚构的站点地址。
 

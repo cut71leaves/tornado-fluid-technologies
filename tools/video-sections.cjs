@@ -28,6 +28,18 @@ function interactionSection() {
   </div></section>`;
 }
 function videoGallery(scope) {
+  if(scope==='technology') {
+    const details={
+      science:'认识空化现象，是理解技术应用的起点。短片介绍局部压力变化与气泡形成、溃灭之间的关系。',
+      prototype:'通过演示样机的运行录像观察处理过程，并结合仿真画面理解流场的可视化表达。',
+      concept:'概念影像呈现液体内部变化的视觉印象，用于帮助理解与交流。'
+    };
+    const notes={science:'空化原理科普，不等同于具体设备的性能承诺。',prototype:'片中包含实拍与仿真。具体参数及处理结果，以对应工况和技术文件为准。',concept:'AI 生成的概念影像，非样机实拍或实验记录。'};
+    return `<section class="section video-library" id="videos"><div class="container"><div class="section-intro"><div><p class="eyebrow">TECHNOLOGY IN MOTION</p><h2>从原理到运行<br>进一步理解技术</h2></div><p>在这里观看空化科普、样机运行与仿真可视化，以及反应概念影像。</p></div><div class="video-library-detail">${['science','prototype','concept'].map((k,i)=>`<section class="technology-video-row" id="video-${k}"><div><p class="eyebrow">0${i+1} / ${catalog[k].caption}</p><h3>${catalog[k].title}</h3><p>${details[k]}</p><p class="caption">${notes[k]}</p></div>${videoCard(k,scope)}</section>`).join('')}</div></div></section>`;
+  }
   return `<section class="section video-library" id="videos"><div class="container"><div class="section-intro"><div><p class="eyebrow">WATCH & UNDERSTAND</p><h2>从影像理解技术</h2></div><p>原理科普、样机运行记录与概念影像，各自呈现不同层面的技术信息。</p></div><div class="video-library-grid">${['science','prototype','concept'].map(k=>videoCard(k,scope)).join('')}</div></div></section>`;
 }
-module.exports = {videoCard,scienceSection,interactionSection,videoGallery};
+function homeTechnology() {
+  return `<section class="section" id="technology"><div class="container home-tech-brief"><div><p class="eyebrow">TECHNOLOGY & ENGINEERING</p><h2>悬浮空化技术<br>从研究走向真实应用</h2><p>围绕流体作用、介质适配与工程实现，探索可评估的处理方案。进入技术与产品，了解核心原理与样机运行。</p><div class="home-tech-tags"><span>空化原理</span><span>样机运行</span><span>工艺评价</span></div><a class="pill" href="technology.html#videos">探索技术与产品 <span aria-hidden="true">↗</span></a></div><a class="home-tech-preview" href="technology.html#video-prototype"><figure><img src="assets/videos/prototype.webp" width="1280" height="720" loading="lazy" alt="样机运行录像预览"><figcaption><span>样机运行记录</span><span>前往观看 ↗</span></figcaption></figure></a></div></section>`;
+}
+module.exports = {videoCard,scienceSection,interactionSection,videoGallery,homeTechnology};
