@@ -5,8 +5,8 @@ const pages = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const errors = [];
 for (const name of pages) {
   const html = fs.readFileSync(path.join(root, name), 'utf8');
-  if (/Vortex\s+Fluid/i.test(html)) errors.push(`${name}: old English brand`);
-  if (name !== '404.html' && !html.includes('Tornado Fluid Technologies')) {
+  if (/(?:Vortex|Tornado)\s+Fluid/i.test(html)) errors.push(`${name}: old English brand`);
+  if (name !== '404.html' && !html.includes('Tomado Fluid Technologies')) {
     errors.push(`${name}: missing English brand`);
   }
   for (const match of html.matchAll(/\b(?:href|src|srcset|data-desktop|data-mobile)="([^"]+)"/g)) {
@@ -22,7 +22,7 @@ for (const match of fs.readFileSync(path.join(root,'site.css'),'utf8').matchAll(
   if (!/^(?:[a-z]+:|\/\/)/i.test(match[1]) && !fs.existsSync(path.resolve(root,match[1]))) errors.push(`site.css: missing resource ${match[1]}`);
 }
 for (const file of ['tools/build.cjs', 'site.js', 'assets/application-guide.txt', 'assets/vortex-logo.svg']) {
-  if (/Vortex\s+Fluid/i.test(fs.readFileSync(path.join(root, file), 'utf8'))) {
+  if (/(?:Vortex|Tornado)\s+Fluid/i.test(fs.readFileSync(path.join(root, file), 'utf8'))) {
     errors.push(`${file}: old English brand`);
   }
 }
