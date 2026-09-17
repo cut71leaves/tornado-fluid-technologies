@@ -35,7 +35,7 @@ function videoGallery(scope) {
       concept:'概念影像呈现液体内部变化的视觉印象，用于帮助理解与交流。'
     };
     const notes={science:'空化原理科普，不等同于具体设备的性能承诺。',prototype:'片中包含实拍与仿真。具体参数及处理结果，以对应工况和技术文件为准。',concept:'AI 生成的概念影像，非样机实拍或实验记录。'};
-    return `<section class="section video-library" id="videos"><div class="container"><div class="section-intro"><div><p class="eyebrow">TECHNOLOGY IN MOTION</p><h2>从原理到运行<br>进一步理解技术</h2></div><p>在这里观看空化科普、样机运行与仿真可视化，以及反应概念影像。</p></div><div class="video-library-detail">${['science','prototype','concept'].map((k,i)=>`<section class="technology-video-row" id="video-${k}"><div><p class="eyebrow">0${i+1} / ${catalog[k].caption}</p><h3>${catalog[k].title}</h3><p>${details[k]}</p><p class="caption">${notes[k]}</p></div>${videoCard(k,scope)}</section>`).join('')}</div></div></section>`;
+    return `<section class="section video-library technology-videos-first" id="videos"><div class="container"><div class="section-intro"><div><p class="eyebrow">TECHNOLOGY IN MOTION</p><h2>从原理到运行<br>进一步理解技术</h2></div><p>在这里观看空化科普、样机运行与仿真可视化，以及反应概念影像。</p></div><div class="video-library-detail">${['prototype','science','concept'].map((k,i)=>`<section class="technology-video-row" id="video-${k}"><div><p class="eyebrow">0${i+1} / ${catalog[k].caption}</p><h3>${catalog[k].title}</h3><p>${details[k]}</p><p class="caption">${notes[k]}</p></div>${videoCard(k,scope)}</section>`).join('')}</div></div></section>`;
   }
   return `<section class="section video-library" id="videos"><div class="container"><div class="section-intro"><div><p class="eyebrow">WATCH & UNDERSTAND</p><h2>从影像理解技术</h2></div><p>原理科普、样机运行记录与概念影像，各自呈现不同层面的技术信息。</p></div><div class="video-library-grid">${['science','prototype','concept'].map(k=>videoCard(k,scope)).join('')}</div></div></section>`;
 }

@@ -149,3 +149,26 @@ html{scroll-padding-top:calc(var(--header) + 22px)}
 @media(max-width:700px){.home-tech-brief,.technology-video-row{grid-template-columns:1fr;gap:27px}.home-tech-brief h2{font-size:28px}.home-tech-brief p:not(.eyebrow){font-size:13px}.home-tech-tags{gap:15px;font-size:10px}.home-tech-preview figcaption{font-size:10px}.technology-video-row{padding:35px 0}.technology-video-row h3{font-size:25px}.technology-video-row p{font-size:13px}.technology-video-row .caption{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.ambient-ribbon,.ambient-light{transform:none!important;will-change:auto}}
 @media print{.site-ambient{display:none!important}}
+
+/* Water is only behind the page; content and controls are never refracted. */
+.water-background{background:#edf5f6}
+.water-poster,.water-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+.water-poster{background:url('assets/water-poster.webp') center/cover}
+.water-canvas{opacity:0;transition:opacity .35s;pointer-events:none}
+.water-ready:not(.water-static) .water-canvas{opacity:1}
+.home-page .section,.inner-page .section{background:#f8fafb91}
+.home-page .sector-home,.inner-page .pale{background:#eef4f4a8}
+.technology-hero{min-height:0;padding:112px 0 22px;background:#edf5f6b3}
+.technology-hero:after{display:none}
+.technology-hero h1{font-size:38px;margin-bottom:13px}
+.technology-hero .eyebrow{margin-bottom:10px}
+.technology-hero .container>p:last-child{font-size:14px}
+.technology-videos-first{padding-top:28px;padding-bottom:30px}
+.technology-videos-first .section-intro{margin-bottom:25px}
+.technology-videos-first .section-intro h2{font-size:27px}
+.technology-videos-first .section-intro .eyebrow{margin-bottom:10px}
+.technology-explanation{max-width:1000px}
+.technology-explanation h2{font-size:29px;margin-bottom:23px}
+.technology-explanation p{font-size:15px;line-height:1.9}
+@media(max-width:700px){.technology-hero{padding:96px 0 17px}.technology-hero h1{font-size:30px;margin-bottom:10px}.technology-hero .container>p:last-child{font-size:12px}.technology-hero .eyebrow{font-size:8px}.technology-videos-first{padding-top:24px}.technology-videos-first .section-intro{gap:14px;margin-bottom:20px}.technology-videos-first .section-intro h2{font-size:24px}.technology-videos-first .section-intro>p{font-size:12px}.technology-videos-first .technology-video-row:first-child{padding-top:0}.technology-videos-first .technology-video-row:first-child>.content-media{grid-row:1}.technology-explanation h2{font-size:25px}.technology-explanation p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.water-canvas{display:none!important}}

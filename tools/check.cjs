@@ -18,6 +18,9 @@ for (const name of pages) {
     }
   }
 }
+for (const match of fs.readFileSync(path.join(root,'site.css'),'utf8').matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g)) {
+  if (!/^(?:[a-z]+:|\/\/)/i.test(match[1]) && !fs.existsSync(path.resolve(root,match[1]))) errors.push(`site.css: missing resource ${match[1]}`);
+}
 for (const file of ['tools/build.cjs', 'site.js', 'assets/application-guide.txt', 'assets/vortex-logo.svg']) {
   if (/Vortex\s+Fluid/i.test(fs.readFileSync(path.join(root, file), 'utf8'))) {
     errors.push(`${file}: old English brand`);
