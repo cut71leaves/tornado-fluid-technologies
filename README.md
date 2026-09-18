@@ -1,6 +1,6 @@
 # 旋风流体品牌官网
 
-英文品牌：Tomado Fluid Technologies
+英文品牌：Tornado Fluid Technologies
 核心技术：悬浮空化技术  
 版本：实拍视频前置与透明水纹背景版 2026-09-17
 

@@ -84,7 +84,7 @@
  form?.addEventListener('submit',e=>{
   e.preventDefault();if(!form.reportValidity())return;
   const values=Object.fromEntries(new FormData(form));
-  const text=['旋风流体 应用需求摘要','Tomado Fluid Technologies','','姓名：'+values.name,'公司：'+values.company,'邮箱：'+values.email,'领域：'+values.sector,'','问题：',values.message,'','此文件由浏览器本地生成，未向旋风流体发送信息。'].join('\n');
+  const text=['旋风流体 应用需求摘要','Tornado Fluid Technologies','','姓名：'+values.name,'公司：'+values.company,'邮箱：'+values.email,'领域：'+values.sector,'','问题：',values.message,'','此文件由浏览器本地生成，未向旋风流体发送信息。'].join('\n');
   const blob=new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download='旋风流体-应用需求摘要.txt';document.body.append(a);a.click();a.remove();

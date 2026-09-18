@@ -1,4 +1,4 @@
-"""Original Tomado Fluid brand film. Blender 4.3+; no external assets.
+"""Original Tornado Fluid brand film. Blender 4.3+; no external assets.
 
 blender -b --python tools/fluid-scene.py -- --out WORK --preview
 blender -b --python tools/fluid-scene.py -- --out WORK --render

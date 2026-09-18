@@ -1,6 +1,6 @@
 # 参与维护旋风流体官网
 
-英文品牌统一使用 Tomado Fluid Technologies，中文品牌为旋风流体，核心技术为悬浮空化技术。
+英文品牌统一使用 Tornado Fluid Technologies，中文品牌为旋风流体，核心技术为悬浮空化技术。
 
 ## 修改和提交
 
